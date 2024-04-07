@@ -73,3 +73,16 @@ CREATE INDEX chambre_disponible ON chambre (disponible_c);
 -- implémenter les vues en tant que vues SQL. Vue 1: la première vue est le nombre de
 -- chambres disponibles par zone. Vue 2: la deuxième vue est la capacité de toutes les
 -- chambres d’un hôtel spécifique.
+CREATE VIEW total_chambre_disponible_adresse_view 
+AS SELECT eh.adresse_eh, count(c) 
+FROM public.chambre c INNER JOIN public.etablissement_hotelier eh ON eh.id_eh = c.id_eh 
+WHERE c.disponible_c = TRUE GROUP BY eh.adresse_eh;
+
+CREATE VIEW total_capacite_view 
+SELECT eh.id_eh,
+    c.intitule_c,
+    count(*) AS count
+   FROM chambre c
+     JOIN etablissement_hotelier eh ON eh.id_eh = c.id_eh
+  GROUP BY eh.id_eh, c.intitule_c;
+
