@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg bg-light navbar-light p-3">
+    <div class="container">
+        <a class="navbar-brand" href="#">OTTAWA UNIVERSITY</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+
+
+                <ng-container *ngIf="isAuthenticated">
+                    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                        <a class="nav-link" [routerLink]="['/home']">Catalogue</a>
+                    </li>
+                    <li class="nav-item" ngbDropdown>
+                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAccount" role="button">
+                            Espace client
+                            <div ngbDropdownMenu aria-labelledby="navbarDropdownAccount" class="dropdown-menu">
+                                <a class="dropdown-item" [routerLink]="['/customer/reservations']">Mes réservations</a>
+                                <a class="dropdown-item" [routerLink]="['/customer/locations']">Mes locations</a>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" ngbDropdown>
+                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAdmin" role="button">
+                            <fa-icon icon="dashboard"></fa-icon>
+                            Console d'Administration
+                            <div ngbDropdownMenu aria-labelledby="navbarDropdownAdmin" class="dropdown-menu">
+                                <a class="dropdown-item" [routerLink]="['/admin/dashboard']">Tableau de bord</a>
+                                <a class="dropdown-item" [routerLink]="['/admin/clients']">Clients</a>
+                                <a class="dropdown-item" [routerLink]="['/admin/hotels']">Hotels</a>
+                                <a class="dropdown-item" [routerLink]="['/admin/reservations']">Réservations</a>
+                                <a class="dropdown-item" [routerLink]="['/admin/locations']">Locations</a>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" ngbDropdown>
+                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAuth" role="button">
+                            <fa-icon icon="user"></fa-icon>
+                            {{account?.id}}
+                            <div ngbDropdownMenu aria-labelledby="navbarDropdownAuth" class="dropdown-menu">
+                                <a class="nav-link" (click)="logout()">Se déconnecter</a>
+                            </div>
+                        </a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="!isAuthenticated">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/authentication/login']">Se connecter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="['/authentication/register']">S'inscrire</a>
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</nav>

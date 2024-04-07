@@ -1,0 +1,48 @@
+<!-- Clients CRUD-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h4 class="page-header">
+                <fa-icon icon="users"></fa-icon> Clients ({{clients.length}}) 
+            </h4>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-sm btn-primary btn-lg" data-toggle="modal" (click)="openClientModal()">Nouveau Client 
+                <fa-icon icon="plus"></fa-icon>
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table" aria-describedby="page-heading">
+                <caption>List des clients</caption>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Numero NAS</th>
+                        <th>Nom Complet</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let client of clients;">
+                        <td>{{client.id_user}}</td>
+                        <td>{{client.username}}</td>
+                        <td>{{client.nom_complet}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-primary mr-1" data-toggle="modal" (click)="openClientModal(client);">
+                                    <fa-icon icon="edit"></fa-icon>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="delete(client);">
+                                    <fa-icon icon="trash"></fa-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

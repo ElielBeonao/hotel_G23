@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="etablissementHotelier">
+            <h2><span >Etablissement Hotelier</span> {{ etablissementHotelier.id_eh }}</h2>
+            <hr>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Nom</span></dt>
+                <dd>
+                    <span>{{ etablissementHotelier.nom_eh }}</span>
+                </dd>
+                <dt><span>Classe</span></dt>
+                <dd>
+                    <span><ngb-rating [(rate)]="etablissementHotelier.classe_eh!" [max]="5" [readonly]="true"/></span>
+                </dd>
+                <dt><span>Adresse</span></dt>
+                <dd>
+                    <span>{{ etablissementHotelier.adresse_eh }}</span>
+                </dd>
+                <dt><span>Nombre de chambres</span></dt>
+                <dd>
+                    <span>{{ etablissementHotelier.nbr_chambres }}</span>
+                </dd>
+                <dt><span>Chaine Hoteliere</span></dt>
+                <dd>
+                    <div *ngIf="etablissementHotelier.chaineHoteliere">
+                        <a [routerLink]="['/admin/chaines-hotelieres', etablissementHotelier.chaineHoteliere.id_ch!]">{{ etablissementHotelier.chaineHoteliere.nom_ch! }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-outline-secondary mx-1">
+                <fa-icon icon="arrow-left"></fa-icon>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/admin/hotels', etablissementHotelier.id_eh, 'edit']"
+                    class="btn btn-primary">
+                 <span>Editer</span>
+                 <fa-icon icon="pencil-alt"></fa-icon>
+            </button>
+        </div>
+    </div>
+</div>

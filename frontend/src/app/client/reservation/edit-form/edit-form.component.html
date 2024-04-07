@@ -1,0 +1,49 @@
+<div class="row d-flex align-items-start">
+    <div class="col-md-6 mx-auto p-5 m-5">
+        <form [formGroup]="editForm" (ngSubmit)="save()">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Fiche de reservation</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="startDate">Date Debut:</label>
+                        <div class="input-group">
+                          <input id="start" type="date" formControlName="date_debut" class="form-control" ngbDatepicker #start="ngbDatepicker">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="start.toggle()" type="button">
+                              <fa-icon icon="calendar"></fa-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group my-3">
+                        <label for="endDate">Date Fin:</label>
+                        <div class="input-group">
+                          <input id="end" type="date" formControlName="date_fin" class="form-control" ngbDatepicker #end="ngbDatepicker">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" (click)="end.toggle()" type="button">
+                              <fa-icon icon="calendar"></fa-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit"
+                            (click)="previousState()"
+                            class="btn btn-outline-secondary mx-1">
+                        <fa-icon icon="arrow-left"></fa-icon>
+                    </button>
+
+            <button type="submit"
+                   [disabled]="editForm.invalid"
+                    class="btn btn-primary">
+                 Enregistrer
+                 <fa-icon icon="save"></fa-icon>
+            </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

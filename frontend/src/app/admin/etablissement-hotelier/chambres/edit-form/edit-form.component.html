@@ -1,0 +1,36 @@
+<form [formGroup]="editForm" (ngSubmit)="save()">
+    <div class="modal-header">
+        <h2 id="jhi-label-heading"
+            class="card-title">Fiche Chambre</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group m-3">
+            <label for="intitule_c">Intitule</label>
+            <input type="text" formControlName="intitule_c" class="form-control" id="intitule_c" placeholder="Entrez l'intituel">
+            <div *ngIf="editForm.get('intitule_c')!.invalid && (editForm.get('intitule_c')!.dirty || editForm.get('intitule_c')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('intitule_c')?.errors?.['required']">
+                  ce champ est requis.
+                </small>
+            </div>
+        </div>
+        <div class="form-group m-3">
+            <label for="nom_complet">Nom Complet</label>
+            <input type="text" formControlName="nom_complet" class="form-control" id="nom_complet" placeholder="Entrez votre nom complet">
+            <div *ngIf="editForm.get('nom_complet')!.invalid && (editForm.get('nom_complet')!.dirty || editForm.get('nom_complet')!.touched)">
+                <small class="form-text text-danger" *ngIf="editForm.get('nom_complet')?.errors?.['required']">
+                  ce champ est requis.
+                </small>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">
+          Annuler
+        </button>
+    
+        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-secondary">
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Enregistrer</span>
+        </button>
+      </div>        
+</form>

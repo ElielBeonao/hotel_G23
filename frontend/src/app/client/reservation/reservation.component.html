@@ -1,0 +1,63 @@
+<!-- Etablissement Hotelierss CRUD-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h4 class="page-header">
+                <fa-icon icon="home"></fa-icon> Reservations ({{reservations.length}}) 
+            </h4>
+        </div>
+    </div>
+    <hr />
+    <div class="row mt-5">
+        <div class="col-md-12" *ngIf="reservations.length == 0">
+            <ngb-alert  type="warning">
+               Aucune reservation n'a été trouvée.
+            </ngb-alert>
+        </div>
+        <div class="col-md-12" *ngIf="reservations.length > 0">
+            <table class="table" aria-describedby="page-heading">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Date Reservation</th>
+                        <th>Chambre</th>
+                        <th>Date Entree</th>
+                        <th>Date Sortie</th>
+                        <th>Employé traitant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reservation of reservations;">
+                        <td>{{reservation.id_res}}</td>
+                        <td>{{reservation?.date_res!.toDate()| date: 'mediumDate'}}</td>
+                        <td>
+                            {{reservation.chambre?.intitule_c}},
+                            {{reservation.chambre?.prix_c}},
+                            {{reservation.chambre?.capacite_c}},
+                            {{reservation.chambre?.etablissementHotelier?.nom_eh!}},
+                            {{reservation.chambre?.etablissementHotelier?.adresse_eh!}}
+                        </td>
+                        <td>{{reservation?.date_debut!.toDate()| date: 'mediumDate'}}</td>
+                        <td>{{reservation?.date_fin!.toDate()| date: 'mediumDate'}}</td>
+                        <td>{{reservation.employe?.nom_complet}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button class="btn btn-primary btn-sm" (click)="edit(reservation)">
+                                    <fa-icon icon="edit"></fa-icon>
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="delete(reservation)">
+                                    <fa-icon icon="trash"></fa-icon>
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-warning btn-sm" (click)="cancel(reservation)">
+                                    <fa-icon icon="ban"></fa-icon>
+                                </button>
+                            </div>
+                        </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

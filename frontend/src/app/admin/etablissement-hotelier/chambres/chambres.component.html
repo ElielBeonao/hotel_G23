@@ -1,0 +1,57 @@
+<!-- Chambres CRUD-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h4 class="page-header">
+                <fa-icon icon="home"></fa-icon>{{etablissementHotelier?.nom_eh}} =>  Liste des chambres de  ({{chambres.length}}) 
+            </h4>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-sm btn-primary btn-lg" data-toggle="modal" (click)="openChambreModal()">Nouvelle Chambre 
+                <fa-icon icon="plus"></fa-icon>
+            </button>
+        </div>
+    </div>
+    <hr />
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <table class="table" aria-describedby="page-heading">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Intitule</th>
+                        <th>Prix</th>
+                        <th>Capacité</th>
+                        <th>Air Conditionné</th>
+                        <th>Refrigerateur</th>
+                        <th>Extensible</th>
+                        <th>Pannes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let chambre of chambres;" [ngClass]="chambre.disponible_c ? 'table-success':''">
+                        <td>{{chambre.id_c}}</td>
+                        <td>{{chambre.intitule_c}}</td>
+                        <td>{{chambre.prix_c|currency:'$'}}</td>
+                        <td>{{chambre.capacite_c}}</td>
+                        <td><fa-icon [icon]="chambre.air_cond_c ? 'thumbs-up' : 'thumbs-down'" [style.color]="chambre.air_cond_c ? 'green':'red'"></fa-icon></td>
+                        <td><fa-icon [icon]="chambre.refrigerator_c ? 'thumbs-up' : 'thumbs-down'" [style.color]="chambre.refrigerator_c ? 'green':'red'"></fa-icon></td>
+                        <td><fa-icon [icon]="chambre.extensible_c ? 'thumbs-up' : 'thumbs-down'" [style.color]="chambre.extensible_c ? 'green':'red'"></fa-icon></td>
+                        <td><fa-icon [icon]="chambre.issue_c ? 'thumbs-up' : 'thumbs-down'" [style.color]="chambre.issue_c ? 'green':'red'"></fa-icon></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-primary mr-1" (click)="openChambreModal(chambre);">
+                                    <fa-icon icon="edit"></fa-icon>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" (click)="delete(chambre);">
+                                    <fa-icon icon="trash"></fa-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
