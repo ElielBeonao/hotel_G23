@@ -3,6 +3,7 @@ import { IEtablissementHotelier } from '../../shared/models/etablissement-hoteli
 import { EtablissementHotelierService } from '../services/etablissement-hotelier.service';
 import { AccountService } from '../../core/auth/account.service';
 import { Account } from '../../core/model/user-account.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-etablissement-hotelier',
@@ -12,6 +13,7 @@ import { Account } from '../../core/model/user-account.model';
 export class EtablissementHotelierComponent implements OnInit{
 
   account: Account | null = null;
+  authSubscription?: Subscription;
   etablissementsHoteliers: IEtablissementHotelier[] = [];
 
   constructor(protected etablissementHotelierService: EtablissementHotelierService, private accountService: AccountService) { }
@@ -19,6 +21,8 @@ export class EtablissementHotelierComponent implements OnInit{
   ngOnInit(): void {
     this.loadEtablissementHotelierByCurrentUser();
     this.account = this.accountService.getAuthenticationState();
+    // this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
+
   }
 
   loadEtablissementHotelierByCurrentUser(){

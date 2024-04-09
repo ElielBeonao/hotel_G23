@@ -6,6 +6,7 @@ const reservationsController = require('../controllers/reservation.controller');
 router.post('/reservations', reservationsController.createReservation);
 router.get('/reservations', reservationsController.getAllReservations);
 router.get('/reservations/me', reservationsController.getReservationsByUser);
+router.get('/reservations/byId/:id_res', reservationsController.getReservationsById);
 router.get('/reservations/byEtablissementHotelier/:id_eh', reservationsController.getReservationsByEtablissementHotelier);
 router.get('/reservations/byChambre/:id_ch', reservationsController.getReservationsByChambre);
 router.put('/reservations/:id_res', reservationsController.updateReservation);

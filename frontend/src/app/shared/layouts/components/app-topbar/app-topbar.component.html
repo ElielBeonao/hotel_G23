@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light navbar-light p-3">
+<nav class="navbar navbar-expand-lg bg-light navbar-light p-3" [ngSwitch]="isAuthenticated">
     <div class="container">
         <a class="navbar-brand" href="#">OTTAWA UNIVERSITY</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,14 +7,12 @@
 
         <div class="navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-
-
-                <ng-container *ngIf="isAuthenticated">
+                <!--<ng-container>-->
                     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                         <a class="nav-link" [routerLink]="['/home']">Catalogue</a>
                     </li>
-                    <li class="nav-item" ngbDropdown>
-                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAccount" role="button">
+                    <li class="nav-item" ngbDropdown *ngSwitchCase="true">
+                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAccount" role="button" *appHasAnyAuthority="['CLIENT']">
                             Espace client
                             <div ngbDropdownMenu aria-labelledby="navbarDropdownAccount" class="dropdown-menu">
                                 <a class="dropdown-item" [routerLink]="['/customer/reservations']">Mes réservations</a>
@@ -22,20 +20,18 @@
                             </div>
                         </a>
                     </li>
-                    <li class="nav-item" ngbDropdown>
-                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAdmin" role="button">
+                    <li class="nav-item" ngbDropdown *ngSwitchCase="true">
+                        <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAdmin" role="button" *appHasAnyAuthority="['EMPLOYE']">
                             <fa-icon icon="dashboard"></fa-icon>
                             Console d'Administration
                             <div ngbDropdownMenu aria-labelledby="navbarDropdownAdmin" class="dropdown-menu">
                                 <a class="dropdown-item" [routerLink]="['/admin/dashboard']">Tableau de bord</a>
                                 <a class="dropdown-item" [routerLink]="['/admin/clients']">Clients</a>
                                 <a class="dropdown-item" [routerLink]="['/admin/hotels']">Hotels</a>
-                                <a class="dropdown-item" [routerLink]="['/admin/reservations']">Réservations</a>
-                                <a class="dropdown-item" [routerLink]="['/admin/locations']">Locations</a>
                             </div>
                         </a>
                     </li>
-                    <li class="nav-item" ngbDropdown>
+                    <li class="nav-item" ngbDropdown *ngSwitchCase="true">
                         <a class="nav-link" tabindex="0" ngbDropdownToggle id="navbarDropdownAuth" role="button">
                             <fa-icon icon="user"></fa-icon>
                             {{account?.id}}
@@ -44,15 +40,15 @@
                             </div>
                         </a>
                     </li>
-                </ng-container>
-                <ng-container *ngIf="!isAuthenticated">
-                    <li class="nav-item">
+                <!--</ng-container>-->
+                <!--<ng-container *ngSwitchCase="false">-->
+                    <li class="nav-item" *ngSwitchCase="false">
                         <a class="nav-link" [routerLink]="['/authentication/login']">Se connecter</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" *ngSwitchCase="false">
                         <a class="nav-link" [routerLink]="['/authentication/register']">S'inscrire</a>
                     </li>
-                </ng-container>
+                <!--</ng-container>-->
             </ul>
         </div>
     </div>

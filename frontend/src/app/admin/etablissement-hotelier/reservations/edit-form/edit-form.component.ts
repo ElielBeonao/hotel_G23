@@ -47,7 +47,10 @@ export class AdminReservationEditFormComponent implements OnInit{
             }
 
   ngOnInit(): void {
-
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const reservationId = params.get('reservationId');
+      this.loadReservationById(reservationId);
+    });
   }
 
   loadReservationById(id: string | null): void {
@@ -55,7 +58,7 @@ export class AdminReservationEditFormComponent implements OnInit{
       const reservationId = Number(id);
       this.reservationService.findById(reservationId).subscribe((res) => {
         this.reservation = res.body ?? new Reservation();
-        // this.reservation.chambre = this.chambreDeReservation ?? undefined;
+        this.updateForm(this.reservation);
       });
     }
   }
@@ -65,12 +68,14 @@ export class AdminReservationEditFormComponent implements OnInit{
   }
 
   updateForm(reservation: IReservation): void {
+    // console.info(reservation);
     this.editForm.patchValue({
       id_res: reservation.id_res,
       date_debut: reservation.date_debut,
       date_fin: reservation.date_fin,
       date_res: reservation.date_res,
       statut_res: reservation.statut_res,
+      chambre: reservation.chambre,
       client: reservation.client,
       employe: reservation.employe,
     });
@@ -98,6 +103,7 @@ export class AdminReservationEditFormComponent implements OnInit{
       statut_res: this.editForm.get(['statut_res'])!.value,
       chambre: this.editForm.get(['chambre'])!.value,
       client: this.editForm.get(['client'])!.value,
+      employe: this.employe?? undefined,
     };
   }
 

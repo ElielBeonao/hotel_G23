@@ -19,12 +19,14 @@ export class ReservationService {
   constructor(protected http: HttpClient) { }
 
   create(reservation: IReservation): Observable<EntityResponseType> {
-    return this.http.post<IReservation>(this.resourceUrl, reservation, { observe: 'response' })
+    const copy = this.convertDateFromClient(reservation);
+    return this.http.post<IReservation>(this.resourceUrl, copy, { observe: 'response' })
     .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   update(reservation: IReservation): Observable<EntityResponseType>{
-    return this.http.put<IReservation>(`${this.resourceUrl}/${reservation.id_res}`, reservation, { observe: 'response' })
+    const copy = this.convertDateFromClient(reservation);
+    return this.http.put<IReservation>(`${this.resourceUrl}/${copy.id_res}`, copy, { observe: 'response' })
     .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
@@ -56,10 +58,10 @@ export class ReservationService {
 
   protected convertDateFromClient(reservation: IReservation): IReservation {
     const copy: IReservation = Object.assign({}, reservation, {
-      date_debut: reservation.date_debut && reservation.date_debut.isValid() ? reservation.date_debut.format(DATE_FORMAT) : undefined,
-      date_fin: reservation.date_fin && reservation.date_fin.isValid() ? reservation.date_fin.format(DATE_FORMAT) : undefined,
+      date_debut: reservation.date_debut && moment(reservation.date_debut).isValid() ? moment(reservation.date_debut).format(DATE_FORMAT) : undefined,
+      date_fin: reservation.date_fin && moment(reservation.date_fin).isValid() ? moment(reservation.date_fin).format(DATE_FORMAT) : undefined,
       date_res:
-      reservation.date_res && reservation.date_res.isValid() ? reservation.date_res.format(DATE_FORMAT) : undefined,
+      reservation.date_res && moment(reservation.date_res).isValid() ? moment(reservation.date_res).format(DATE_FORMAT) : undefined,
     });
     return copy;
   }

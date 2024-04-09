@@ -3,31 +3,40 @@
         <form [formGroup]="editForm" (ngSubmit)="save()">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="text-center">Fiche de reservation</h3>
+                    <h3 class="text-center">Fiche de reservation <span *ngIf="editForm.get('id_res')?.value"># {{editForm.get('id_res')?.value}}</span></h3>
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="startDate">Date Debut:</label>
-                        <div class="input-group">
-                          <input id="start" type="date" formControlName="date_debut" class="form-control" ngbDatepicker #start="ngbDatepicker">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="start.toggle()" type="button">
-                              <fa-icon icon="calendar"></fa-icon>
-                            </button>
-                          </div>
+                      <label for="startDate">Date Debut:</label>
+                      <div class="input-group">
+                        <input id="start" type="date" formControlName="date_debut" class="form-control" ngbDatepicker #start="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="start.toggle()" type="button">
+                            <fa-icon icon="calendar"></fa-icon>
+                          </button>
                         </div>
                       </div>
-                      <div class="form-group my-3">
-                        <label for="endDate">Date Fin:</label>
-                        <div class="input-group">
-                          <input id="end" type="date" formControlName="date_fin" class="form-control" ngbDatepicker #end="ngbDatepicker">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" (click)="end.toggle()" type="button">
-                              <fa-icon icon="calendar"></fa-icon>
-                            </button>
-                          </div>
+                    </div>
+                    <div class="form-group my-3">
+                      <label for="endDate">Date Fin:</label>
+                      <div class="input-group">
+                        <input id="end" type="date" formControlName="date_fin" class="form-control" ngbDatepicker #end="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="end.toggle()" type="button">
+                            <fa-icon icon="calendar"></fa-icon>
+                          </button>
                         </div>
                       </div>
+                    </div>
+                    <div class="form-group my-3">
+                      <label>Chambre:</label>
+                      <p>
+                        {{editForm.get('chambre')?.value?.intitule_c}}, 
+                        {{editForm.get('chambre')?.value?.capacite_c}},
+                        {{editForm.get('chambre')?.value?.etablissementHotelier?.nom_eh}},
+                        {{editForm.get('chambre')?.value?.etablissementHotelier?.adresse_eh}}
+                      </p>
+                    </div>
                 </div>
                 <div class="card-footer">
                     <button type="submit"
@@ -40,7 +49,6 @@
                    [disabled]="editForm.invalid"
                     class="btn btn-primary">
                  Enregistrer
-                 
             </button>
                 </div>
             </div>

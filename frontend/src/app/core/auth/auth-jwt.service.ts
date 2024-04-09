@@ -33,17 +33,26 @@ export class AuthServerProvider {
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
   }
 
+  // logout(): Observable<void> {
+  //   return new Observable(observer => {
+  //     // this.$localStorage.clear('authenticationToken');
+  //     // this.$sessionStorage.clear('authenticationToken');
+  //     localStorage.removeItem('authenticationToken');
+  //     sessionStorage.removeItem('authenticationToken');
+  //     localStorage.removeItem('authenticationState');
+      
+  //     observer.complete();
+  //   });
+  // }
+
   logout(): Observable<void> {
     return new Observable(observer => {
-      // this.$localStorage.clear('authenticationToken');
-      // this.$sessionStorage.clear('authenticationToken');
       localStorage.removeItem('authenticationToken');
       sessionStorage.removeItem('authenticationToken');
-      localStorage.removeItem('authenticationState');
-      
       observer.complete();
     });
   }
+
 
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
     const jwt = response.access_token;

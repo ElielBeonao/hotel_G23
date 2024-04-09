@@ -14,6 +14,7 @@ import { AccountService } from '../../../core/auth/account.service';
 })
 export class AdminReservationsComponent implements OnInit {
 
+  serverMessage: any;
   employe: ICompteUtilisateur | null = null;
   reservations: IReservation[] = [];
   etablissementHotelier: IEtablissementHotelier | null = null;
@@ -38,7 +39,7 @@ export class AdminReservationsComponent implements OnInit {
   }
 
   edit(reservation?: IReservation): void {
-    this.router.navigate(['/admin/reservations', reservation?.id_res, 'edit']);
+    this.router.navigate(['/admin/hotels',this.etablissementHotelier?.id_eh,'reservations', reservation?.id_res, 'edit']);
   }
 
   delete(reservation: IReservation): void {
@@ -49,16 +50,41 @@ export class AdminReservationsComponent implements OnInit {
 
   valider(reservation: IReservation): void {
     reservation.statut_res = ReservationStatut.CONFIRMEE;
+    reservation.employe = this.employe||undefined;
+    // reservation.employee = this.employe;
     // console.log(reservation);
     this.reservationService.update(reservation).subscribe(() => {
-      // this.loadReservations();
+      this.serverMessage = {message: 'Reservation validée', type: 'success'};
+      setTimeout(() => {
+        this.loadReservations(this.etablissementHotelier?.id_eh!);
+        this.serverMessage = null;
+      },2000);
+      // this.loadReservations(this.etablissementHotelier?.id_eh!);
+    },
+    (error) => {
+
+      this.serverMessage = {message: error.error.message, type: 'danger'};
+      setTimeout(() => {
+        this.serverMessage = null;
+      },3000);
     });
   }
 
   cancel(reservation: IReservation): void {
     reservation.statut_res = ReservationStatut.ANNULEE;
+    reservation.employe = this.employe||undefined;
     this.reservationService.update(reservation).subscribe(() => {
-      // this.loadReservations();
+      this.serverMessage = {message: 'Reservation annulée', type: 'success'};
+      setTimeout(() => {
+        this.loadReservations(this.etablissementHotelier?.id_eh!);
+        this.serverMessage = null;
+      },2000);
+    },
+    (error) => {
+      this.serverMessage = {message: error.error.message, type: 'danger'};
+      setTimeout(() => {
+        this.serverMessage = null;
+      },3000);
     });
   }
 }

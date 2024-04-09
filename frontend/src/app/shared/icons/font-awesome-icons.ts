@@ -97,6 +97,11 @@ import {
     faThumbsUp,
     faThumbsDown,
     faAddressCard,
+    faPlay,
+    faPlayCircle,
+    faStop,
+    faStopCircle,
+    faClose,
   } from '@fortawesome/free-solid-svg-icons';
   
   export const fontAwesomeIcons = [
@@ -206,6 +211,12 @@ import {
     faThumbsDown,
     faMoneyCheckAlt,
     faAddressCard,
-    
+    faTags,
+    faPlay,
+    faPlayCircle,
+    faStop,
+    faStopCircle,
+    faRunning,
+    faClose
   ];
   

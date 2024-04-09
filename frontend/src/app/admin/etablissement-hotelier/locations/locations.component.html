@@ -1,0 +1,86 @@
+<!-- Etablissement Hotelierss CRUD-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <h4 class="page-header">
+                <fa-icon icon="home"></fa-icon> Locations ({{locations.length}}) 
+            </h4>
+        </div>
+    </div>
+    <hr />
+    <ngb-alert  [type]="serverMessage.type" *ngIf="serverMessage">
+        {{serverMessage.message}}
+     </ngb-alert>
+    <div class="row mt-5">
+        <div class="col-md-12" *ngIf="locations.length == 0">
+            <ngb-alert  type="warning">
+               Aucune location n'a été trouvée.
+            </ngb-alert>
+        </div>
+        <div class="col-md-12" *ngIf="locations.length > 0">
+            <table class="table" aria-describedby="page-heading">
+                <caption *ngIf="etablissementHotelier">Liste des locations de <a [routerLink]="['/admin/hotels',etablissementHotelier.id_eh!]">{{etablissementHotelier.nom_eh}}</a></caption>
+                <thead>
+                    <tr>
+                        <th>!</th>
+                        <th>Id</th>
+                        <th>Date Location</th>
+                        <th>Chambre</th>
+                        <th>Reservation</th>
+                        <th>Date Entree</th>
+                        <th>Date Sortie</th>
+                        <th>Client</th>
+                        <th>Employé traitant</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let location of locations;">
+                        <td>
+                            <fa-icon icon="running" *ngIf="location.statut_loc === 1" class="text-success"></fa-icon>
+                            <fa-icon icon="close" *ngIf="location.statut_loc === 2" class="text-danger"></fa-icon>
+                        </td>
+                        <td>{{location.id_loc}}</td>
+                        <td>{{location?.date_loc!.toDate()| date: 'mediumDate'}}</td>
+                        <td>
+                            {{location.chambre?.intitule_c}},
+                            {{location.chambre?.prix_c}},
+                            {{location.chambre?.capacite_c}},
+                            {{location.chambre?.etablissementHotelier?.nom_eh!}},
+                            {{location.chambre?.etablissementHotelier?.adresse_eh!}}
+                        </td>
+                        <td>
+                            <a class="btn btn-link" *ngIf="location.reservation" [routerLink]="['/admin/hotels',etablissementHotelier?.id_eh!,'reservations',location.reservation.id_res, 'edit']">
+                                # {{location.reservation.id_res}}
+                            </a>
+                            <span *ngIf="!location.reservation">
+                                N/A
+                            </span>
+                        </td>
+                        <td>{{location?.date_debut!.toDate()| date: 'mediumDate'}}</td>
+                        <td>{{location?.date_fin!.toDate()| date: 'mediumDate'}}</td>
+                        <td>{{location.client?.nom_complet}}</td>
+                        <td>{{location.employe?.nom_complet}}</td>
+                        <td>
+                            <div class="btn-group mx-1">
+                                <button class="btn btn-primary btn-sm" (click)="edit(location)">
+                                    <fa-icon icon="edit"></fa-icon>
+                                </button>
+                                <button class="btn btn-danger btn-sm" (click)="delete(location)">
+                                    <fa-icon icon="trash"></fa-icon>
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn btn-outline-success btn-sm" (click)="start(location)" [disabled]="location.statut_loc !== 0">
+                                    <fa-icon icon="play"></fa-icon>
+                                </button>
+                                <button class="btn btn-outline-warning btn-sm" (click)="finish(location)" [disabled]="location.statut_loc === 2">
+                                    <fa-icon icon="stop"></fa-icon>
+                                </button>
+                            </div>
+                        </td>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

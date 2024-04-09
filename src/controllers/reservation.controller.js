@@ -43,13 +43,26 @@ async function getReservationsByUser(req, res) {
     res.json(reservations);
 }
 
+async function getReservationsById(req, res) {
+    const { id_res } = req.params;
+    console.log(`id: ${id_res}`);
+    const reservation = await ReservationModel.findOne({ where: { id_res: id_res } , include: [
+        {model: UtilisateurCompteModel, as:'client', require:true},
+        {model: UtilisateurCompteModel, as:'employe'},
+        {model: ChambreModel, as:'chambre', require:true, include: [{model: EtablissementHotelierModel, as:'etablissementHotelier', require:true}]}
+    ]});
+    res.json(reservation);
+}
+
+
 // Recuperer les reservations par l'etablissement hotelier
 async function getReservationsByEtablissementHotelier(req, res) {
     const { id_eh } = req.params;
     const reservations = await ReservationModel.findAll({ include: [
-        { model: UtilisateurCompteModel, as:'client', require:true},
-        { model: UtilisateurCompteModel, as:'employe', require:true},
-        {model: ChambreModel, as:'chambre', require:true, where: { id_eh }, inluce: [{model: EtablissementHotelierModel, as:'etablissementHotelier', require:true}]},
+        { model: UtilisateurCompteModel, as:'client'},
+        { model: UtilisateurCompteModel, as:'employe'},
+        { model: ChambreModel, as:'chambre', where: { id_eh }, 
+        include: [{model: EtablissementHotelierModel, as:'etablissementHotelier'}]},
     ]});
     res.json(reservations);
 }
@@ -64,15 +77,14 @@ async function getReservationsByChambre(req, res) {
 // Mettre a jour une reservation
 async function updateReservation(req, res) {
     const { id_res } = req.params;
-    const { date_debut, date_fin, client, employe, chambre } = req.body;
-    console.log(`date_debut: ${date_debut}, date_fin: ${date_fin}, client: ${client}, employe: ${employe}, chambre: ${chambre}`);
+    const { date_debut, date_fin, client, employe, chambre, statut_res } = req.body;
     let id_emp = null;
     let id_cli = null;
     const id_c = chambre.id_c;
-    const clientFound = await UtilisateurCompteModel.findOne({ where: { username: client.id } });
+    const clientFound = await UtilisateurCompteModel.findOne({ where: { username: client.id_user } });
     // console.log(`clientFound: ${clientFound}`);
-    if(clientFound !== null && clientFound !== undefined && clientFound.id_user !== undefined) {
-        id_cli = clientFound.id_user;
+    if( client.id_user !== undefined) {
+        id_cli = client.id_user;
     }
     
     if( employe !== null && employe !== undefined && employe.id !== undefined) {
@@ -81,6 +93,8 @@ async function updateReservation(req, res) {
             id_emp = employeFound.id_user;
         }
     }
+    console.log(`date_debut: ${date_debut}, date_fin: ${date_fin}, client: ${id_cli}, employe: ${id_emp}, chambre: ${id_c}, statut_res: ${statut_res}, id_res: ${id_res}`);
+
     const [updated] = await ReservationModel.update({ date_debut, date_fin, id_emp, id_cli, id_c, statut_res }, { where: { id_res } });
     if (!updated) {
         return res.status(404).json({ message: 'Reservation non trouvee' });
@@ -101,6 +115,7 @@ async function deleteReservation(req, res) {
 module.exports = {
     createReservation,
     getAllReservations,
+    getReservationsById,
     getReservationsByUser,
     getReservationsByEtablissementHotelier,
     getReservationsByChambre,

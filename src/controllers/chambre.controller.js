@@ -42,7 +42,7 @@ async function getChambresByFilter(req, res) {
         whereClause.capacite_c = capacity;
     }
     if (area) {
-        whereClause.surface_ch = area;
+        whereClause.intitule_c = area;
     }
     if (hotelChain) {
         whereClause['$etablissementHotelier.chaineHoteliere.id_ch$'] = hotelChain;

@@ -36,6 +36,14 @@ export class AccountService {
     localStorage.setItem('authenticationState', JSON.stringify(this.userIdentity));
   }
 
+  // authenticate(identity: Account | null): void {
+  //   console.info('authenticate');
+  //   this.userIdentity = identity;
+  //   this.authenticationState.next(this.userIdentity);
+  //   // console.info('After Auth:',this.authenticationState.value);
+  // }
+
+
   resetPasswordInit(mail: string): Observable<{}> {
     return this.http.post(`/api/account/reset-password/init`, mail);
   }
@@ -45,19 +53,25 @@ export class AccountService {
   }
 
   hasAnyAuthority(authorities: string[] | string): boolean {
-    if (!this.userIdentity || !this.userIdentity.userType) {
+    // console.info('Has Any Authority invoked!');
+    // console.info('@',this.authenticationState.value?.userType!);
+    const currentUserInfos = this.getAuthenticationState();
+    if (!currentUserInfos || !currentUserInfos.userType) {
       return false;
     }
     if (!Array.isArray(authorities)) {
       authorities = [authorities];
     }
 
-    return authorities.includes(this.userIdentity.userType);
+    // return authorities.includes(this.userIdentity.userType);
+    // console.info(authorities.includes(this.authenticationState.value?.userType!));
+    
+    return authorities.includes(currentUserInfos.userType!);
   }
 
   identity(force?: boolean): Observable<Account | null> {
     if (!this.accountCache$ || force || !this.isAuthenticated()) {
-      console.info('identity');
+      // console.info('identity');
       this.accountCache$ = this.fetch().pipe(
         catchError(() => {
           return of(null);
@@ -81,9 +95,19 @@ export class AccountService {
   }
 
 
+  // isAuthenticated(): boolean {
+  //   return this.userIdentity !== null;
+  // }
+
+  // getAuthenticationState(): Observable<Account | null> {
+  //   return this.authenticationState.asObservable();
+  // }
+
+
+
   isAuthenticated(): boolean {
     const user = JSON.parse(localStorage.getItem('authenticationState')!) ?? null;
-    console.info('isAuthenticated', user !== null);
+    // console.info('isAuthenticated', user !== null);
     return user !== null;
   }
 
@@ -103,6 +127,7 @@ export class AccountService {
     //   startWith(initialState)
     // );
   }
+
 
   getUserName(): string {
     return this.userIdentity ? this.userIdentity.id : '';

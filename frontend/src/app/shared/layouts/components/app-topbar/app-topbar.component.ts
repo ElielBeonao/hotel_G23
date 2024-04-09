@@ -14,9 +14,12 @@ import { Observable, Subscription, of } from 'rxjs';
 export class AppTopbarComponent implements OnInit {
 
   // currentUsername: string = '';
-  account: Account | null = null;
+  // account: Account | null = null;
   // authSubscription?: Subscription;
   isAuthenticated: boolean = false;
+  account: Account | null = null;
+  // authSubscription?: Subscription;
+
 
   constructor(protected accountService: AccountService, protected loginService: LoginService, private router: Router) { }
 
@@ -29,7 +32,14 @@ export class AppTopbarComponent implements OnInit {
     // });
     this.account = this.accountService.getAuthenticationState();
     this.isAuthenticated = this.accountService.isAuthenticated();
+
+    // this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
   }
+
+  // isAuthenticated(): boolean {
+  //   return this.accountService.isAuthenticated();
+  // }
+
 
   logout(): void {
     this.loginService.logout();

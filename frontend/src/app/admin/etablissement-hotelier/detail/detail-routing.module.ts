@@ -5,6 +5,8 @@ import { EtablissementHotelierChambresComponent } from '../chambres/chambres.com
 import { EtablissementHotelierEmployesComponent } from '../employes/employes.component';
 import { AdminReservationsComponent } from '../reservations/reservations.component';
 import { AdminReservationEditFormComponent } from '../reservations/edit-form/edit-form.component';
+import { EtablissementHotelierLocationsComponent } from '../locations/locations.component';
+import { EtablissementHotelierEditFormComponent } from '../edit-form/edit-form.component';
 
 const routes: Routes = [
   {
@@ -24,13 +26,26 @@ const routes: Routes = [
     component: AdminReservationsComponent
   },
   {
-    path: 'reservations/edit/:reservationId',
+    path: 'reservations/:reservationId/edit',
     component: AdminReservationEditFormComponent
   },
   {
     path: 'reservations/new',
     component: AdminReservationEditFormComponent
   },
+  {
+    path: 'locations',
+    component: EtablissementHotelierLocationsComponent
+  },
+  {
+    path: 'locations/:locationId/edit',
+    component: EtablissementHotelierEditFormComponent
+  },
+  {
+    path: 'locations/new',
+    component: EtablissementHotelierLocationsComponent
+  
+  }
 ];
 
 @NgModule({

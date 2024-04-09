@@ -17,26 +17,26 @@ const ReservationModel = db.define('Reservation', {
     type: DataTypes.SMALLINT,
     defaultValue: 0
   },
-  id_c: {
-    type: DataTypes.STRING(6),
-    allowNull: false
-  },
-  id_emp: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: {
-      model: 'CompteUtilisateur',
-      key: 'nas_emp'
-    }
-  },
-  id_cli: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'CompteUtilisateur',
-      key: 'nas_cli'
-    }
-  },
+  // id_c: {
+  //   type: DataTypes.STRING(6),
+  //   allowNull: false
+  // },
+  // id_emp: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: true,
+  //   references: {
+  //     model: 'CompteUtilisateur',
+  //     key: 'nas_emp'
+  //   }
+  // },
+  // id_cli: {
+  //   type: DataTypes.INTEGER,
+  //   allowNull: false,
+  //   references: {
+  //     model: 'CompteUtilisateur',
+  //     key: 'nas_cli'
+  //   }
+  // },
   date_debut: {
     type: DataTypes.DATEONLY,
     allowNull: false
@@ -50,9 +50,11 @@ const ReservationModel = db.define('Reservation', {
   timestamps: false
 });
 
-ReservationModel.belongsTo(UtilisateurModel, {foreignKey: 'id_emp', as: 'employe'});
+
+ReservationModel.belongsTo(UtilisateurModel, {foreignKey: 'id_emp', as: 'employe', require: false});
 ReservationModel.belongsTo(UtilisateurModel, {foreignKey: 'id_cli', as: 'client'});
 ReservationModel.belongsTo(ChambreModel, {foreignKey: 'id_c', as: 'chambre'});
+// ReservationModel.belongsTo(ReservationModel, {foreignKey: 'id_res', as: 'reservation'});
 
 module.exports = ReservationModel;
 

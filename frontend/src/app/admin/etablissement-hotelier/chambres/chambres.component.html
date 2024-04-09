@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-10">
             <h4 class="page-header">
-                <fa-icon icon="home"></fa-icon>{{etablissementHotelier?.nom_eh}} =>  Liste des chambres de  ({{chambres.length}}) 
+                <fa-icon icon="home"></fa-icon> <a [routerLink]="['/admin/hotels/',etablissementHotelier?.id_eh]" class="btn btn-link">{{etablissementHotelier?.nom_eh}}</a> =>  Liste des chambres de  ({{chambres.length}}) 
             </h4>
         </div>
         <div class="col-md-2">
@@ -30,7 +30,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let chambre of chambres;" [ngClass]="chambre.disponible_c ? 'table-success':''">
+                    <tr *ngFor="let chambre of chambres;" [ngClass]="chambre.disponible_c ? 'table-success':'table-danger'">
                         <td>{{chambre.id_c}}</td>
                         <td>{{chambre.intitule_c}}</td>
                         <td>{{chambre.prix_c|currency:'$'}}</td>

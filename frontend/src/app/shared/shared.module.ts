@@ -22,6 +22,7 @@ import { StateStorageService } from '../core/auth/state-storage.service';
 import { AuthExpiredInterceptor } from '../core/interceptors/auth-expired.interceptor';
 import { AuthInterceptor } from '../core/interceptors/auth.interceptor';
 import { CompteUtilisateurService } from '../admin/services/compte-utilisateur.service';
+import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 @NgModule({
   declarations: [
@@ -29,14 +30,15 @@ import { CompteUtilisateurService } from '../admin/services/compte-utilisateur.s
     MainLayoutComponent,
     AppFooterComponent,
     AppMenuComponent,
-    AppTopbarComponent
+    AppTopbarComponent,
+    HasAnyAuthorityDirective
   ],
   imports: [
     CommonModule,
     RouterOutlet,
     RouterModule,
     ReactiveFormsModule,
-    // HttpClientModule,
+    // HasAnyAuthorityDirective,
     NgbDatepicker,
     FontAwesomeModule,
     NgSwitch, NgSwitchCase, NgSwitchDefault,
@@ -49,6 +51,7 @@ import { CompteUtilisateurService } from '../admin/services/compte-utilisateur.s
     AppFooterComponent,
     AppMenuComponent,
     AppTopbarComponent,
+    HasAnyAuthorityDirective,
     ReactiveFormsModule,
     NgbAlertModule,
     NgbPaginationModule,
